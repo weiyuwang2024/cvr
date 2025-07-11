@@ -1,0 +1,5 @@
+# Requirements for LLM scripts using pydantic_ai
+pydantic-ai>=0.0.1
+pydantic>=2.0.0
+asyncio
+typing-extensions
