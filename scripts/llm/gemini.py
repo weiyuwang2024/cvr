@@ -10,13 +10,15 @@ from pydantic_ai import Agent
 from pydantic_ai.models.gemini import GeminiModel
 from pydantic_ai.providers.google_gla import GoogleGLAProvider
 
+from .base_llm import BaseLLM
+
 # Available Gemini models
 AVAILABLE_MODELS = [
     "gemini-2.0-flash",
     "gemini-2.5-pro",
 ]
 
-class GeminiLLM:
+class GeminiLLM(BaseLLM):
     def __init__(self, model_name: str):
         """Initialize Gemini LLM with model name."""
         if model_name not in AVAILABLE_MODELS:
@@ -30,4 +32,4 @@ class GeminiLLM:
         # Create provider and model
         self.provider = GoogleGLAProvider(api_key=self.api_key)
         self.model = GeminiModel(model_name, provider=self.provider)
-        self.agent = Agent(self.model)
+        super().__init__(self.model)

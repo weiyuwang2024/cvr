@@ -10,6 +10,8 @@ from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.azure import AzureProvider
 
+from .base_llm import BaseLLM
+
 # Available Azure OpenAI models
 AVAILABLE_MODELS = [
     "gpt-4o-mini", 
@@ -19,7 +21,7 @@ AVAILABLE_MODELS = [
     "o3-mini"
 ]
 
-class OpenAILLM:
+class OpenAILLM(BaseLLM):
     
     def __init__(self, model_name: str):
         """Initialize OpenAI LLM with model name."""
@@ -38,5 +40,5 @@ class OpenAILLM:
             api_key=self.api_key
         )
         self.model = OpenAIModel(model_name, provider=self.provider)
-        self.agent = Agent(self.model)
+        super().__init__(self.model)
 
