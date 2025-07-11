@@ -42,12 +42,12 @@ Return a JSON array of candidate reviews, sorted by overall ranking (best candid
 
 ```json
 [
-  {
+  {{
     "name": "Candidate Name",
     "well_known_software_company_experience": 5,
     "ai_ml_experience_score": 8,
     "reason_for_score": "Has 3 years at Google working on ML infrastructure, extensive experience with TensorFlow and PyTorch for model training, built production RAG systems using vector databases, and developed LLM-powered applications with LangChain. Strong background in both theoretical ML and practical implementation."
-  }
+  }}
 ]
 ```
 
