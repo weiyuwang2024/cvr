@@ -10,7 +10,8 @@ from typing import List, Any
 import json
 
 from scripts.llm.base_llm import BaseLLM
-from scripts.prompts import TITLE_EXTRACTION_TEMPLATE
+from scripts.parser.candidate_models import CandidateAnalysisResult
+from scripts.prompts import RESUME_ANALYSIS_PROMPT
 
 def ensure_directory(file_path: str) -> str:
     if not file_path:
@@ -61,20 +62,11 @@ class BaseMDParser(ABC):
             # Convert the document
             markdown_content = self._parse_file(file_path) 
             
-            prompt = TITLE_EXTRACTION_TEMPLATE.format(text=markdown_content)
-            title = await self.llm.generate(prompt)
+            prompt = RESUME_ANALYSIS_PROMPT.format(text=markdown_content)
+            review_results = await self.llm.generate(prompt, output_type=CandidateAnalysisResult)
 
-            json_content = {
-                "title": title.strip(),
-                "content": markdown_content,
-            }
+            save_json(review_results.dict(), output_file)
 
-            save_json(json_content, output_file)
-
-            md_file = output_file.replace('.json', '.md')
-
-            save_text(markdown_content, md_file)
-                
             return output_file
             
         except Exception as e:
