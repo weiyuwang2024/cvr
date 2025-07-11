@@ -34,11 +34,11 @@ class OpenAILLM(BaseLLM):
         self.api_key = os.getenv('AZURE_LLM_API_KEY', '')
         
         # Create provider and model
-        self.provider = AzureProvider(
+        provider = AzureProvider(
             azure_endpoint=self.endpoint,
             api_version=self.api_version,
             api_key=self.api_key
         )
-        self.model = OpenAIModel(model_name, provider=self.provider)
-        super().__init__(self.model)
+        model = OpenAIModel(model_name, provider=provider)
+        super().__init__(model)
 

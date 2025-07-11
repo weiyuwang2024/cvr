@@ -25,9 +25,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from scripts.parser.docling_parser import DoclingParser
 from scripts.llm.openai import OpenAILLM, AVAILABLE_MODELS as AVAILABLE_OPENAI_MODELS
 from scripts.llm.gemini import GeminiLLM, AVAILABLE_MODELS as AVAILABLE_GEMINI_MODELS
+from scripts.llm.bedrock import BedrockLLM, AVAILABLE_MODELS as AVAILABLE_BEDROCK_MODELS
 
 # Combined available models from both providers
-AVAILABLE_MODELS = AVAILABLE_OPENAI_MODELS + AVAILABLE_GEMINI_MODELS
+AVAILABLE_MODELS = AVAILABLE_OPENAI_MODELS + AVAILABLE_GEMINI_MODELS + AVAILABLE_BEDROCK_MODELS
 
 
 def find_pdf_files(input_path: str) -> List[str]:
@@ -162,6 +163,8 @@ Examples:
         llm = OpenAILLM(args.model)
     elif args.model in AVAILABLE_GEMINI_MODELS:
         llm = GeminiLLM(args.model)
+    elif args.model in AVAILABLE_BEDROCK_MODELS:
+        llm = BedrockLLM(args.model)
     else:
         print(f"Model {args.model} is not supported. Available models: {AVAILABLE_MODELS}")
         sys.exit(1)

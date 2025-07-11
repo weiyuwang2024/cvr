@@ -30,6 +30,6 @@ class GeminiLLM(BaseLLM):
             raise ValueError("GEMINI_API_KEY environment variable is required")
         
         # Create provider and model
-        self.provider = GoogleGLAProvider(api_key=self.api_key)
-        self.model = GeminiModel(model_name, provider=self.provider)
-        super().__init__(self.model)
+        provider = GoogleGLAProvider(api_key=self.api_key)
+        model = GeminiModel(model_name, provider=provider)
+        super().__init__(model)
