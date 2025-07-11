@@ -22,7 +22,7 @@ async def hello_world_async():
     
     try:
         # Initialize Gemini LLM with gemini-2.0-flash model
-        llm = GeminiLLM("gemini-2.0-flash")
+        llm = GeminiLLM("gemini-2.5-pro")
         print(f"✅ Initialized Gemini LLM with model: {llm.model_name}")
         
         # Simple hello world prompt

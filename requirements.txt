@@ -4,4 +4,5 @@ pydantic>=2.0.0
 asyncio
 typing-extensions
 docling>=2.33
+markitdown
 dotenv
