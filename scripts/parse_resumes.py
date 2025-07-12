@@ -63,13 +63,29 @@ def print_resume_reviews(candidates: List[Any]) -> None:
         print("No candidate data found.")
         return
     
-    # Sort candidates by AI/ML score (descending) then by company experience
-    candidates.sort(
+    # Filter candidates: AI/ML score >= 6 AND company experience > 1
+    total_candidates = len(candidates)
+    filtered_candidates = [
+        c for c in candidates
+        if c.get('ai_ml_experience_score', 0) >= 6 and c.get('well_known_software_company_experience', 0) > 1
+    ]
+    
+    print(f"\nTotal Candidates Processed: {total_candidates}")
+    print(f"Candidates Meeting Criteria (AI/ML Score >= 6 AND Company Experience > 1 year): {len(filtered_candidates)}")
+    
+    if not filtered_candidates:
+        print("No candidates meet the minimum criteria.")
+        return
+    
+    # Sort filtered candidates by AI/ML score (descending) then by company experience
+    filtered_candidates.sort(
         key=lambda x: (x.get('ai_ml_experience_score', 0), x.get('well_known_software_company_experience', 0)),
         reverse=True
     )
     
-    print(f"\nTotal Candidates Analyzed: {len(candidates)}")
+    candidates = filtered_candidates
+    
+    print(f"\nQualified Candidates for Review: {len(candidates)}")
     print("\nRanked Candidate Reviews:")
     print("-" * 80)
 
@@ -87,16 +103,7 @@ def print_resume_reviews(candidates: List[Any]) -> None:
         if i < len(candidates):
             print("-" * 40)
     
-    # Print summary
-    high_ai_candidates = [c for c in candidates if c.get('ai_ml_experience_score', 0) >= 7]
-    company_exp_candidates = [c for c in candidates if c.get('well_known_software_company_experience', 0) > 1]
-
     print("\n" + "="*80)
-    print("SUMMARY")
-    print("="*80)
-    print(f"Candidates with high AI/ML scores (7+): {len(high_ai_candidates)}")
-    print(f"Candidates with well-known company experience: {len(company_exp_candidates)}")
-
 
 async def main():
     """Main function to orchestrate resume parsing and analysis."""
