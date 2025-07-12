@@ -182,8 +182,20 @@ Examples:
         results = await parse_resume_file(docling_parser, pdf_path, args.output)
         candidates.extend(results)
     
+    # Deduplicate candidates by name (keep first occurrence)
+    seen_names = set()
+    unique_candidates = []
+    for candidate in candidates:
+        name = candidate.get('name', 'Unknown').strip().lower()
+        if name not in seen_names:
+            seen_names.add(name)
+            unique_candidates.append(candidate)
+    
+    if len(candidates) != len(unique_candidates):
+        print(f"\nDuplicates removed: {len(candidates) - len(unique_candidates)} candidates")
+    
     # Print results
-    print_resume_reviews(candidates)
+    print_resume_reviews(unique_candidates)
     print(f"\nAnalysis files saved in: {args.output}")
 
 if __name__ == "__main__":
