@@ -7,3 +7,4 @@ docling>=2.33
 markitdown
 dotenv
 boto3>=1.26.0
+tqdm

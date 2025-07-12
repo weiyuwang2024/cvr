@@ -17,7 +17,7 @@ import os
 import sys
 from pathlib import Path
 from typing import List,Any
-import json
+from tqdm import tqdm
 
 # Add the project root to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -172,7 +172,7 @@ Examples:
     
     # Process all PDF files
     candidates = []
-    for pdf_path in pdf_files:
+    for pdf_path in tqdm(pdf_files):
         results = await parse_resume_file(docling_parser, pdf_path, args.output)
         candidates.extend(results)
     

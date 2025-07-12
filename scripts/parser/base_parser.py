@@ -10,7 +10,7 @@ from typing import List, Any
 import json
 
 from scripts.llm.base_llm import BaseLLM
-from scripts.parser.candidate_models import CandidateAnalysisResult
+from scripts.parser.candidate_models import CandidateReview
 from scripts.prompts import RESUME_ANALYSIS_PROMPT
 
 def ensure_directory(file_path: str) -> str:
@@ -96,8 +96,8 @@ class BaseMDParser(ABC):
                 save_text(markdown_content, md_file)
             
             prompt = RESUME_ANALYSIS_PROMPT.format(text=markdown_content)
-            review_results = await self.llm.generate(prompt, output_type=CandidateAnalysisResult)
-            review_results = [r.__dict__ for r in review_results.candidates]
+            review_results = await self.llm.generate(prompt, output_type=List[CandidateReview])
+            review_results = [r.__dict__ for r in review_results]
             save_json(review_results, output_file)
 
             return review_results
