@@ -48,7 +48,6 @@ async def parse_resume_file(parser: DoclingParser, pdf_path: str, output_dir: st
     pdf_name = Path(pdf_path).stem
     output_file = os.path.join(output_dir, f"{pdf_name}.json")
     
-    print(f"Processing: {pdf_path}")
     results = await parser.parse_file(pdf_path, output_file)
     return results
 
@@ -90,7 +89,7 @@ def print_resume_reviews(candidates: List[Any]) -> None:
     
     # Print summary
     high_ai_candidates = [c for c in candidates if c.get('ai_ml_experience_score', 0) >= 7]
-    company_exp_candidates = [c for c in candidates if c.get('well_known_software_company_experience', 0) > 0]
+    company_exp_candidates = [c for c in candidates if c.get('well_known_software_company_experience', 0) > 1]
 
     print("\n" + "="*80)
     print("SUMMARY")
